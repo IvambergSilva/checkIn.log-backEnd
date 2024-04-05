@@ -12,6 +12,22 @@ export async function getAttendeeBadge(app: FastifyInstance) {
                     attendeeId: z.coerce.number().int()
                 }),
                 response: {
+                    200: z.object({
+                        badge: z.object({
+                            name: z.string().min(4),
+                            socialName: z.string().nullable(),
+                            email: z.string().email(),
+                            age: z.number().int(),
+                            gender: z.string(),
+                            customGender: z.string().nullable(),
+                            treatAs: z.string().nullable(),
+                            accessibility: z.string().nullable(),
+                            createdAt: z.string().datetime(),
+                            checkInURL: z.string().url(),
+                            eventTitle: z.string(),
+                            eventDetails: z.string(),
+                        })
+                    })
                 }
             }
         }, async (req: FastifyRequest, res: FastifyReply) => {
@@ -40,14 +56,29 @@ export async function getAttendeeBadge(app: FastifyInstance) {
                 }
             })
 
-
-
             if (attendee === null) {
                 throw new Error('Usuário não encontrado')
             }
 
+            const baseURL = `${req.protocol}://${req.hostname}`
+
+            const checkInURL = new URL(`/attendees/${attendeeId}/check-in`, baseURL)
+
             return res.status(200).send({
-                attendee: attendee
+                badge: {
+                    name: attendee.name,
+                    socialName: attendee.socialName,
+                    email: attendee.email,
+                    age: attendee.age,
+                    gender: attendee.gender,
+                    customGender: attendee.customGender,
+                    treatAs: attendee.treatAs,
+                    accessibility: attendee.accessibility,
+                    createdAt: attendee.createdAt.toISOString(),
+                    checkInURL: checkInURL.toString(),
+                    eventTitle: attendee.event.title,
+                    eventDetails: attendee.event.details
+                }
             })
         })
 }

@@ -15,7 +15,7 @@ Content-Type: application/json
 {
     "name": "Diego Fernandes",
     "socialName": "",
-    "email": "diego.beradino@rocketseat.com",
+    "email": "d.beradino@rocketseat.com",
     "age": 29,
     "gender": "Masculino",
     "customGender": "",
@@ -30,3 +30,6 @@ GET http://localhost:3333/events/f16d752d-1175-46ce-8e36-e90512f2abc1
 ###
 
 GET http://localhost:3333/events/attendees/1/badge
+
+###
+GET http://localhost:3333/attendees/10/check-in
