@@ -13,9 +13,9 @@ POST http://localhost:3333/events/9a3f9666-f6ae-446a-82ff-c488e535a399/attendees
 Content-Type: application/json
 
 {
-    "name": "Diego Fernandes",
+    "name": "Ivamberg Fernandes",
     "socialName": "",
-    "email": "d.beradino@rocketseat.com",
+    "email": "d.braino@rocketseat.com",
     "age": 29,
     "gender": "Masculino",
     "customGender": "",
@@ -32,4 +32,7 @@ GET http://localhost:3333/events/f16d752d-1175-46ce-8e36-e90512f2abc1
 GET http://localhost:3333/events/attendees/1/badge
 
 ###
-GET http://localhost:3333/attendees/10/check-in
+GET http://localhost:3333/attendees/11/check-in
+
+###
+GET http://localhost:3333/events/9a3f9666-f6ae-446a-82ff-c488e535a399/attendees?query=diego
