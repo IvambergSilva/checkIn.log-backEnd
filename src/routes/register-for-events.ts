@@ -2,6 +2,7 @@ import { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
 import { ZodTypeProvider } from "fastify-type-provider-zod";
 import z from "zod";
 import { prisma } from "../lib/prisma";
+import { BadRequest } from "./_errors/bad-request";
 
 interface IAttendeesProps {
     name: string;
@@ -18,6 +19,8 @@ export async function registerForEvents(app: FastifyInstance) {
         withTypeProvider<ZodTypeProvider>()
         .post('/events/:eventId/attendees', {
             schema: {
+                summary: 'Register an attendee',
+                tags: ['attendee'],
                 body: z.object({
                     name: z.string().min(4),
                     socialName: z.string(),
@@ -68,7 +71,7 @@ export async function registerForEvents(app: FastifyInstance) {
             })
 
             if (attendeeFromEmail !== null) {
-                throw new Error('Este email já está registrado neste evento.')
+                throw new BadRequest('Este email já está registrado neste evento.')
             }
 
             const attendee = await prisma.attendees.create({

@@ -25,7 +25,7 @@ Content-Type: application/json
 
 ###
 
-GET http://localhost:3333/events/f16d752d-1175-46ce-8e36-e90512f2abc1
+GET http://localhost:3333/events/9565b98a-a615-4a00-a69c-20584aaaa1b2
 
 ###
 
