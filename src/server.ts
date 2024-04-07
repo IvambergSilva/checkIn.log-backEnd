@@ -25,7 +25,7 @@ app.register(fastifySwagger, {
         produces: ['application/json'],
         info: {
             title: 'CheckIn.log',
-            description: 'Especificações da API para o back-end da aplicação CheckIn.log construída durante o NLW da Rocketseat',
+            description: 'Especificações da API para o back-end da aplicação CheckIn.log construída durante o NLW da Rocketseat.',
             version: '1.0.0'
         }
     },

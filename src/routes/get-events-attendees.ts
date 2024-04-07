@@ -25,14 +25,16 @@ export async function getEventsAttendees(app: FastifyInstance) {
                     200: z.object({
                         attendees: z.array(
                             z.object({
-                                id: z.number(),
+                                id: z.string(),
                                 name: z.string().min(4),
                                 socialName: z.string().nullable(),
                                 email: z.string().email(),
                                 createdAt: z.date(),
-                                checkInAt: z.date().nullable(),
+                                checkedInAt: z.date().nullable(),
                             })
-                        )
+                        ),
+                        eventTitle: z.string(),
+                        total: z.number()
                     })
                 },
             }
@@ -41,35 +43,81 @@ export async function getEventsAttendees(app: FastifyInstance) {
 
             const { pageIndex, query }: IQueryProps = req.query as IQueryProps
 
-            const attendees = await prisma.attendees.findMany({
-                select: {
-                    id: true,
-                    name: true,
-                    socialName: true,
-                    email: true,
-                    createdAt: true,
-                    checkIn: {
-                        select: {
-                            createdAt: true,
+            const [attendees, total, eventTitle] = await Promise.all([
+                prisma.attendees.findMany({
+                    select: {
+                        id: true,
+                        name: true,
+                        socialName: true,
+                        email: true,
+                        createdAt: true,
+                        checkIn: {
+                            select: {
+                                createdAt: true,
+                            }
+                        },
+                        event: {
+                            select: {
+                                title: true
+                            }
                         }
+                    },
+                    where: query
+                        ? {
+                            eventId,
+                            OR: [
+                                {
+                                    socialName: {
+                                        contains: query,
+                                    },
+                                },
+                                {
+                                    socialName: null,
+                                    name: {
+                                        contains: query,
+                                    },
+                                },
+                            ],
+                        }
+                        : {
+                            eventId,
+                        },
+                    take: 10,
+                    skip: pageIndex * 10,
+                    orderBy: {
+                        createdAt: 'desc'
                     }
-                },
-                where: query
-                    ? {
+                }),
+                prisma.attendees.count({
+                    where: query ? {
                         eventId,
-                        name: {
-                            contains: query
-                        }
-                    }
-                    : {
+                        OR: [
+                            {
+                                socialName: {
+                                    contains: query,
+                                },
+                            },
+                            {
+                                socialName: null,
+                                name: {
+                                    contains: query,
+                                },
+                            },
+                        ],
+                    } : {
                         eventId,
                     },
-                take: 10,
-                skip: pageIndex * 10,
-                orderBy: {
-                    createdAt: 'desc'
-                }
-            })
+                }),
+                prisma.event.findUnique({
+                    select: {
+                        title: true
+                    },
+                    where: {
+                        id: eventId
+                    }
+                })
+            ])
+
 
             return res.status(200).send({
                 attendees: attendees.map(attendee => {
@@ -79,9 +127,11 @@ export async function getEventsAttendees(app: FastifyInstance) {
                         socialName: attendee.socialName,
                         email: attendee.email,
                         createdAt: attendee.createdAt,
-                        checkInAt: attendee.checkIn?.createdAt ?? null
+                        checkedInAt: attendee.checkIn?.createdAt ?? null
                     }
-                })
+                }),
+                eventTitle: eventTitle?.title,
+                total,
             })
         })
 }

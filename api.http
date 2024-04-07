@@ -1,38 +1,46 @@
+# Create an event
 POST http://localhost:3333/events
 Content-Type: application/json
 
 {
     "title": "Py NE",
     "details": "Evento de Py no Nordeste",
-    "maximumAttendees": 1
+    "maximumAttendees": 3
 }
 
 ###
 
-POST http://localhost:3333/events/9a3f9666-f6ae-446a-82ff-c488e535a399/attendees
+# Register an attendee
+POST http://localhost:3333/events/bef2c7e9-feb1-49b7-a127-d0791e09bd5b/attendees
 Content-Type: application/json
 
 {
-    "name": "Ivamberg Fernandes",
-    "socialName": "",
-    "email": "d.braino@rocketseat.com",
-    "age": 29,
-    "gender": "Masculino",
-    "customGender": "",
-    "treatAs": "Masculino",
+    "name": "Mary Smith",
+    "socialName": "Andre Smith",
+    "email": "mary.smith@example.com",
+    "age": 35,
+    "gender": "female",
+    "customGender": "Transsexual",
+    "treatAs": "male",
     "accessibility": "Nenhuma"
 }
 
 ###
 
-GET http://localhost:3333/events/9565b98a-a615-4a00-a69c-20584aaaa1b2
+# Get an event
+GET http://localhost:3333/events/300b8deb-ae7f-43df-8243-441b88436c97
 
 ###
 
-GET http://localhost:3333/events/attendees/1/badge
+# Get an attendees badge
+GET http://localhost:3333/events/attendees/g23a76/badge
 
 ###
-GET http://localhost:3333/attendees/11/check-in
+
+# Check-in attendee
+GET http://localhost:3333/attendees/9217g8/check-in
 
 ###
-GET http://localhost:3333/events/9a3f9666-f6ae-446a-82ff-c488e535a399/attendees?query=diego
+
+# Get event attendee
+GET http://localhost:3333/events/bef2c7e9-feb1-49b7-a127-d0791e09bd5b/attendees?query=john

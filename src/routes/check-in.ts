@@ -12,20 +12,20 @@ export async function checkIn(app: FastifyInstance) {
                 summary: 'Check-in an attendee',
                 tags: ['chek-ins'],
                 params: z.object({
-                    attendeeId: z.coerce.number().int()
+                    attendeeId: z.string()
                 }),
                 response: {
                     200: z.object({
                         checkInId: z.object({
-                            checkInId: z.coerce.number().int(),
+                            checkInId: z.string(),
                             createdAt: z.string().datetime(),
-                            attendeesId: z.coerce.number().int()
+                            attendeesId: z.string()
                         })
                     })
                 }
             }
         }, async (req: FastifyRequest, res: FastifyReply) => {
-            const { attendeeId }: { attendeeId: number } = req.params as { attendeeId: number }
+            const { attendeeId }: { attendeeId: string } = req.params as { attendeeId: string }
 
             const attendeeCheckIn = await prisma.checkIn.findUnique({
                 where: {
@@ -37,21 +37,24 @@ export async function checkIn(app: FastifyInstance) {
                 throw new BadRequest('Usuário já fez o check-in')
             }
 
-            const checkInId = await prisma.checkIn.create({
+            const checkInId = await import('nanoid').then(({customAlphabet, }) => {
+                const id = customAlphabet('123456789', 6)
+                return id()
+            })
+
+            const checkIn = await prisma.checkIn.create({
                 data: {
+                    id: checkInId,
                     attendeesId: attendeeId
                 }
             })
 
-            console.log(checkInId);
-
             return res.status(200).send({
                 checkInId: {
-                    checkInId: checkInId.id,
-                    createdAt: checkInId.createdAt.toISOString(),
-                    attendeesId: checkInId.attendeesId
+                    checkInId: checkIn.id,
+                    createdAt: checkIn.createdAt.toISOString(),
+                    attendeesId: checkIn.attendeesId
                 }
             })
-
         })
 }

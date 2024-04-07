@@ -6,6 +6,7 @@ import { BadRequest } from "./_errors/bad-request";
 
 interface IAttendeesProps {
     name: string;
+    socialName?: string;
     email: string;
     age: number;
     gender: string;
@@ -26,22 +27,33 @@ export async function registerForEvents(app: FastifyInstance) {
                     socialName: z.string(),
                     email: z.string().email(),
                     age: z.number().int().positive(),
-                    gender: z.string().min(3),
+                    gender: z.string(),
                     customGender: z.string(),
-                    treatAs: z.string().min(3),
-                    accessibility: z.string().min(5),
+                    treatAs: z.string(),
+                    accessibility: z.string(),
                 }),
                 params: z.object({
                     eventId: z.string().uuid()
                 }),
                 response: {
                     201: z.object({
-                        attendeeId: z.number()
+                        attendee: z.object({
+                            attendeeId: z.string(),
+                            name: z.string(),
+                            socialName: z.string().nullish(),
+                            email: z.string().email(),
+                            age: z.number().int().positive(),
+                            gender: z.string(),
+                            customGender: z.string(),
+                            treatAs: z.string(),
+                            accessibility: z.string(),
+                            eventId: z.string()
+                        })
                     })
                 }
             }
         }, async (req: FastifyRequest, res: FastifyReply) => {
-            const { name, email, age, gender, customGender, treatAs, accessibility }: IAttendeesProps = req.body as IAttendeesProps
+            const { name, socialName, email, age, gender, customGender, treatAs, accessibility }: IAttendeesProps = req.body as IAttendeesProps
 
             const { eventId }: { eventId: string } = req.params as { eventId: string }
 
@@ -59,7 +71,7 @@ export async function registerForEvents(app: FastifyInstance) {
             ])
 
             if (event?.maximumAttendees && amountOfAttendeesForEvent >= event?.maximumAttendees) {
-                throw new Error('O número limite de participantes já foi atingido')
+                throw new BadRequest('O número limite de participantes já foi atingido')
             }
 
             const attendeeFromEmail = await prisma.attendees.findUnique({
@@ -74,12 +86,30 @@ export async function registerForEvents(app: FastifyInstance) {
                 throw new BadRequest('Este email já está registrado neste evento.')
             }
 
+            const attendeeId = await import('nanoid').then(({ customAlphabet }) => {
+                const id = customAlphabet('123456789abcdefghi', 6);
+                return id();
+            })
+
             const attendee = await prisma.attendees.create({
                 data: {
-                    name, email, age, gender, customGender, treatAs, accessibility, eventId
+                    id: attendeeId, socialName, name, email, age, gender, customGender, treatAs, accessibility, eventId
                 },
             })
 
-            return res.status(201).send({ attendeeId: attendee.id })
+            return res.status(201).send({
+                attendee: {
+                    attendeeId: attendee.id,
+                    name: attendee.name,
+                    socialName: attendee.socialName,
+                    email: attendee.email,
+                    age: attendee.age,
+                    gender: attendee.gender,
+                    customGender: attendee.customGender,
+                    treatAs: attendee.treatAs,
+                    accessibility: attendee.accessibility,
+                    eventId: attendee.eventId
+                }
+            })
         })
 }
