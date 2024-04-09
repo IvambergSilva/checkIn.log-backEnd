@@ -55,7 +55,7 @@ export async function registerForEvents(app: FastifyInstance) {
         }, async (req: FastifyRequest, res: FastifyReply) => {
             const { name, socialName, email, age, gender, customGender, treatAs, accessibility }: IAttendeesProps = req.body as IAttendeesProps
 
-            const { eventId }: { eventId: string } = req.params as { eventId: string }
+            const { eventId } = req.params as { eventId: string }
 
             const [event, amountOfAttendeesForEvent] = await Promise.all([
                 prisma.event.findUnique({

@@ -36,7 +36,7 @@ export async function getAttendeeBadge(app: FastifyInstance) {
                 }
             }
         }, async (req: FastifyRequest, res: FastifyReply) => {
-            const { attendeeId }: { attendeeId: string } = req.params as { attendeeId: string }
+            const { attendeeId } = req.params as { attendeeId: string }
 
             const attendee = await prisma.attendees.findUnique({
                 select: {

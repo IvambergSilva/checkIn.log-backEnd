@@ -39,9 +39,9 @@ export async function getEventsAttendees(app: FastifyInstance) {
                 },
             }
         }, async (req: FastifyRequest, res: FastifyReply) => {
-            const { eventId }: { eventId: string } = req.params as { eventId: string }
+            const { eventId } = req.params as { eventId: string }
 
-            const { pageIndex, query }: IQueryProps = req.query as IQueryProps
+            const { pageIndex, query } = req.query as IQueryProps
 
             const [attendees, total, eventTitle] = await Promise.all([
                 prisma.attendees.findMany({

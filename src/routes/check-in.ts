@@ -25,7 +25,7 @@ export async function checkIn(app: FastifyInstance) {
                 }
             }
         }, async (req: FastifyRequest, res: FastifyReply) => {
-            const { attendeeId }: { attendeeId: string } = req.params as { attendeeId: string }
+            const { attendeeId } = req.params as { attendeeId: string }
 
             const attendeeCheckIn = await prisma.checkIn.findUnique({
                 where: {
