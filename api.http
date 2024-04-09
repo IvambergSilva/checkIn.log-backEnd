@@ -3,9 +3,9 @@ POST http://localhost:3333/events
 Content-Type: application/json
 
 {
-    "title": "Py NE",
-    "details": "Evento de Py no Nordeste",
-    "maximumAttendees": 3
+    "title": "DevFest",
+    "details": "Um evento para Devs em João Pessoa",
+    "maximumAttendees": 125
 }
 
 ###
@@ -15,13 +15,13 @@ POST http://localhost:3333/events/bef2c7e9-feb1-49b7-a127-d0791e09bd5b/attendees
 Content-Type: application/json
 
 {
-    "name": "Mary Smith",
-    "socialName": "Andre Smith",
-    "email": "mary.smith@example.com",
-    "age": 35,
-    "gender": "female",
-    "customGender": "Transsexual",
-    "treatAs": "male",
+    "name": "Carlos Garcia",
+    "socialName": "Ana Garcia",
+    "email": "ana.garcia@gmail.com",
+    "age": 29,
+    "gender": "male",
+    "customGender": "Transgênero",
+    "treatAs": "female",
     "accessibility": "Nenhuma"
 }
 
@@ -43,4 +43,4 @@ GET http://localhost:3333/attendees/9217g8/check-in
 ###
 
 # Get event attendee
-GET http://localhost:3333/events/bef2c7e9-feb1-49b7-a127-d0791e09bd5b/attendees?query=john
+GET http://localhost:3333/events/bef2c7e9-feb1-49b7-a127-d0791e09bd5b/attendees?query=dean
