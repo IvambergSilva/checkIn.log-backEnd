@@ -69,12 +69,14 @@ export async function getEventsAttendees(app: FastifyInstance) {
                                 {
                                     socialName: {
                                         contains: query,
+                                        mode: "insensitive"
                                     },
                                 },
                                 {
                                     socialName: null,
                                     name: {
                                         contains: query,
+                                        mode: "insensitive"
                                     },
                                 },
                             ],
@@ -95,12 +97,14 @@ export async function getEventsAttendees(app: FastifyInstance) {
                             {
                                 socialName: {
                                     contains: query,
+                                    mode: "insensitive"
                                 },
                             },
                             {
                                 socialName: null,
                                 name: {
                                     contains: query,
+                                    mode: "insensitive"
                                 },
                             },
                         ],

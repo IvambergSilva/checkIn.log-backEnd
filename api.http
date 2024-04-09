@@ -28,19 +28,19 @@ Content-Type: application/json
 ###
 
 # Get an event
-GET http://localhost:3333/events/300b8deb-ae7f-43df-8243-441b88436c97
+GET http://localhost:3333/events/bef2c7e9-feb1-49b7-a127-d0791e09bd5b
 
 ###
 
 # Get an attendees badge
-GET http://localhost:3333/events/attendees/g23a76/badge
+GET http://localhost:3333/events/attendees/gcg23d/badge
 
 ###
 
 # Check-in attendee
-GET http://localhost:3333/attendees/9217g8/check-in
+GET http://localhost:3333/attendees/gcg23d/check-in
 
 ###
 
 # Get event attendee
-GET http://localhost:3333/events/bef2c7e9-feb1-49b7-a127-d0791e09bd5b/attendees?query=dean
+GET http://localhost:3333/events/bef2c7e9-feb1-49b7-a127-d0791e09bd5b/attendees?query=ana
