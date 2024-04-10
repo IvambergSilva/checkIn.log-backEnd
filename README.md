@@ -4,6 +4,8 @@ O CheckIn.log é uma aplicação para **gerenciamento de participantes em evento
 
 Esta ferramenta permite que o responsável pelo evento cadastre-o e crie uma página pública para inscrições.
 
+Com este backend, os organizadores podem visualizar e gerenciar eventos, enquanto os participantes podem se inscrever e realizar check-in nos eventos.
+
 <hr>
 
 ## Documentção da API (Swagger):
@@ -158,18 +160,10 @@ ALTER TABLE "check-ins" ADD CONSTRAINT "check-ins_attendee-id_fkey" FOREIGN KEY 
 
 ## 🤝 Autor
 
-<table>
-  <tr>
-    <td align="center">
-      <a href="#">
-        <img src="https://avatars.githubusercontent.com/u/99219836" width="100px;" alt="Foto do Ivamberg Silva no GitHub"/><br>
-        <sub>
-          <b>Ivamberg Silva</b>
-        </sub>
-      </a>
-    </td>
-    <td>
-      Copyright © 2024 - Ivamberg Silva
-    </td>
-  </tr>
-</table>
+<p align="center">
+    <a href="https://www.linkedin.com/in/ivamberg-silva/">
+        <img src="https://avatars.githubusercontent.com/u/99219836" width="100px;" alt="Foto do Ivamberg Silva no GitHub" /><br>
+        <b>Ivamberg Silva</b>
+    </a>
+</p>
+<p align="center">Copyright © 2024 - Ivamberg Silva</p>
