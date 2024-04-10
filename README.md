@@ -1,4 +1,4 @@
-# CheckIn.log
+# CheckIn.log - Backend
 
 O CheckIn.log é uma aplicação para **gerenciamento de participantes em eventos presenciais**.
 
@@ -88,10 +88,10 @@ Siga essas etapas para configurar e iniciar a aplicação localmente na sua máq
     ```
     - Em seguida, inicie o servidor do FRONT-END:
     ```bash
-    npm start
+    npm run dev
     ```
 6) Acessar a Aplicação:
-    - Abra o seu navegador e acesse o link gerado [http://localhost:3333](http://localhost:3333) para acessar a aplicação.
+    - Abra o seu navegador e acesse o link gerado para acessar a aplicação.
 
 <hr>
 
